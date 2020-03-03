@@ -4,6 +4,7 @@
 
  void alarm_handler (int);
  void generateAlarmWithAlarmHandler();
+ void addToStatusFile(char []);
 
 int main()
 {
@@ -24,8 +25,8 @@ int main()
 	}
 
 	else if(process>0){
-		time_t clk = time(NULL);
 		printf("Parent process running at %s\n",ctime(&clk));
+		addToStatusFile("jlmoasdsdsd");
 	}
 
 
@@ -40,4 +41,9 @@ void generateAlarmWithAlarmHandler(){
 	printf("Setting up Alram\n");
 	alarm(5);
 	pause();
+}
+
+void addToStatusFile(char input [1000]){
+	printf("got this input %s\n", input);
+	return ;
 }
