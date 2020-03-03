@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <time.h>
 #include <signal.h>
+#include <unistd.h>
 
  void alarm_handler (int);
  void generateAlarmWithAlarmHandler();
+ void createStatusFile();
  void addToStatusFile(char []);
 
 int main()
@@ -25,7 +27,7 @@ int main()
 	}
 
 	else if(process>0){
-		printf("Parent process running at %s\n",ctime(&clk));
+		printf("Parent process running at %s",ctime(&clk));
 		addToStatusFile("jlmoasdsdsd");
 	}
 
@@ -43,7 +45,29 @@ void generateAlarmWithAlarmHandler(){
 	pause();
 }
 
+
+void createStatusFile(){
+	FILE *fPtr;
+
+	if( access( "data/status.txt", F_OK ) != -1 ) {
+		printf("wooo, file already present.\n");
+	} 
+	else {
+    	fPtr = fopen("data/status.txt", "w");
+		printf("wooo, file created.\n");
+
+		if(fPtr == NULL){
+			printf("Unable to create file.\n");
+			exit(-1);
+		}
+		fclose(fPtr);
+	}
+
+}
+
+
 void addToStatusFile(char input [1000]){
-	printf("got this input %s\n", input);
+	createStatusFile();
 	return ;
 }
+
