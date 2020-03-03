@@ -9,15 +9,16 @@ int main()
 	process=fork();
 
 	if (process<0){
-		printf("fork failed");
+		printf("fork failed \n");
 	}
 
 	else if(process == 0){
-		printf("Child process created");
+		printf("Child process created \n");
+		printf("%d \n",getpid());
 	}
 
 	else if(process>0){
-		printf("Only Parent process running");
+		printf("Only Parent process running \n");
 	}
 
 	signal(SIGALRM, alarm_handler); 
