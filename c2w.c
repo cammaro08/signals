@@ -1,12 +1,15 @@
 #include <stdio.h>
+#include <time.h>
 #include <signal.h>
 
  void alarm_handler (int);
- void generateAlarmWithHandler();
+ void generateAlarmWithAlarmHandler();
 
 int main()
 {
+	time_t clk = time(NULL);
 	int process;
+	int childPID;
 	process=fork();
 
 	if (process<0){
@@ -14,9 +17,11 @@ int main()
 	}
 
 	else if(process == 0){
-		printf("Child process created \n");
-		printf("%d \n",getpid());
-		generateAlarmWithHandler();
+		printf("Child process created at %s",ctime(&clk));
+		childPID = getpid();
+		printf("%d \n",childPID);
+		generateAlarmWithAlarmHandler();
+		printf("%s",gettimeofday());
 	}
 
 	else if(process>0){
@@ -30,7 +35,7 @@ void alarm_handler(int signalBit){
 	printf("The signal generated from the alarm has been caught");
 }
 
-void generateAlarmWithHandler(){
+void generateAlarmWithAlarmHandler(){
 	signal(SIGALRM, alarm_handler); 
 	printf("Setting up Alram\n");
 	alarm(5);
