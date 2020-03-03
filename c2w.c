@@ -21,11 +21,11 @@ int main()
 		childPID = getpid();
 		printf("%d \n",childPID);
 		generateAlarmWithAlarmHandler();
-		printf("%s",gettimeofday());
 	}
 
 	else if(process>0){
-		printf("Parent process running \n");
+		time_t clk = time(NULL);
+		printf("Parent process running at %s\n",ctime(&clk));
 	}
 
 
