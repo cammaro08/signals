@@ -1,0 +1,8 @@
+*******Log File*******
+Child Prcess Created: Sun Mar  8 19:02:40 2020
+
+Parent Prcess Created: Sun Mar  8 19:02:40 2020
+Parent Prcess Created: Sun Mar  8 19:04:39 2020
+Child Prcess Created: Sun Mar  8 19:04:39 2020
+Parent Process Created: Sun Mar  8 19:05:02 2020
+Child Process Created: Sun Mar  8 19:05:02 2020
