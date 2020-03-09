@@ -7,24 +7,30 @@
  void generateAlarmWithAlarmHandler();
  void createStatusFile();
  void addToStatusFile(char []);
+ void userInterruptHandler(int);
+ void mycustom1_handler(int);
 
 int main()
 {
-	time_t clk = time(NULL);
+	signal(SIGINT,userInterruptHandler);
+	signal(SIGUSR1,mycustom1_handler);
+
+
 	int process;
 	int childPID;
 	process=fork();
-
+	
 	if (process<0){
 		printf("fork failed \n");
 	}
 
 	else if(process == 0){
-		printf("Child process created at %s",ctime(&clk));
+		printf("Child process created");
 		addToStatusFile("Child Process Created");
 		childPID = getpid();
 		printf("%d \n",childPID);
 		generateAlarmWithAlarmHandler();
+		pause();
 	}
 
 	else if(process>0){
@@ -32,7 +38,7 @@ int main()
 		addToStatusFile("Parent Process Created");
 	}
 
-
+	
 }
 
 void alarm_handler(int signalBit){
@@ -43,7 +49,6 @@ void generateAlarmWithAlarmHandler(){
 	signal(SIGALRM, alarm_handler); 
 	printf("Setting up Alram\n");
 	alarm(5);
-	pause();
 }
 
 
@@ -78,3 +83,16 @@ void addToStatusFile(char inputText [1000]){
 	fclose(fPtr);
 }
 
+
+void userInterruptHandler(int signo){
+	int childPID = getpid();
+	printf("\nInterrupt signal has been");
+	kill(childPID, SIGUSR1);
+
+}
+
+void mycustom1_handler (int signo)
+{
+    printf("woo..ctrl-c is pressed..aka TS signal is recieved!\n");   
+	return; 
+}
