@@ -36,6 +36,7 @@ int main()
 	else if(process>0){
 		printf("Parent process created.");
 		addToStatusFile("Parent Process Created");
+		
 	}
 
 	
