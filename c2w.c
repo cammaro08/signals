@@ -12,8 +12,7 @@
 
 int main()
 {
-	signal(SIGINT,userInterruptHandler);
-	signal(SIGUSR1,mycustom1_handler);
+
 
 
 	int process;
@@ -30,15 +29,21 @@ int main()
 		childPID = getpid();
 		printf("%d \n",childPID);
 		generateAlarmWithAlarmHandler();
-		pause();
+		
+
+		
 	}
 
 	else if(process>0){
 		printf("Parent process created.");
 		addToStatusFile("Parent Process Created");
-		
 	}
 
+	signal(SIGINT,userInterruptHandler);
+	signal(SIGUSR1,mycustom1_handler);
+	while(1)
+	{
+	}return 0;
 	
 }
 
@@ -86,13 +91,14 @@ void addToStatusFile(char inputText [1000]){
 
 
 void userInterruptHandler(int signo){
+	signal(SIGINT, userInterruptHandler);
 	int childPID = getpid();
 	printf("\nInterrupt signal has been");
 	kill(childPID, SIGUSR1);
 
 }
 
-void mycustom1_handler (int signo)
+void mycustom1_handler (int sig_num)
 {
     printf("woo..ctrl-c is pressed..aka TS signal is recieved!\n");   
 	return; 
