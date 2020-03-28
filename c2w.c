@@ -42,6 +42,8 @@ int main()
 	// 	//generateAlarmWithAlarmHandler();
 	// }
 
+     parentPID = getpid();
+
 	if ((process = fork()) == 0)
 	{
 		// parentPID = getppid();
@@ -51,19 +53,21 @@ int main()
 		// doChildThing(childPID);
 		signal(SIGINT, &userInterruptHandler);
 		signal(SIGUSR1, &mycustom1_handler);
-		signal(SIGTSTP, &childTerminateHandler);
-		signal(SIGSTOP, &childTerminateHandler);
+				signal(SIGSTOP, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
+
 		generateAlarmWithAlarmHandler();
 
 	}
 	else
 	{
-		parentPID = getpid();
-		//child_pid = process;
+	
+		childPID = process;
 		printf("PARENT PID: %d PARENT PROCESS CONTINUES CHILD PID: %d\n", parentPID, childPID);
 		signal(SIGINT, &parentHandler);
-		signal(SIGSTOP, SIG_IGN);
-		signal(SIGTSTP, SIG_IGN);
+				signal(SIGTSTP, &childTerminateHandler);
+		signal(SIGSTOP, &childTerminateHandler);
+
 	}
 
 	//addToStatusFile("Parent Process Created");
@@ -77,7 +81,7 @@ int main()
 void childTerminateHandler(int signo) {
 	//childPID = getpid();
 	printf("\n CHILD PID: %d exiting", childPID);
-	//kill(childPID,SIGKILL);
+	kill(childPID,SIGKILL);
 }
 
 void parentHandler(int signo)
