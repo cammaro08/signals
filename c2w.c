@@ -56,7 +56,7 @@ int main()
 				signal(SIGSTOP, SIG_IGN);
 		signal(SIGTSTP, SIG_IGN);
 
-		generateAlarmWithAlarmHandler();
+		//generateAlarmWithAlarmHandler();
 
 	}
 	else
@@ -65,15 +65,15 @@ int main()
 		childPID = process;
 		printf("PARENT PID: %d PARENT PROCESS CONTINUES CHILD PID: %d\n", parentPID, childPID);
 		signal(SIGINT, &parentHandler);
-				signal(SIGTSTP, &childTerminateHandler);
+		signal(SIGTSTP, &childTerminateHandler);
 		signal(SIGSTOP, &childTerminateHandler);
 
 	}
 
 	//addToStatusFile("Parent Process Created");
-	
-	for (;;)
-		;
+	generateAlarmWithAlarmHandler();
+	for (;;);
+	//pause();
 
 	return 0;
 }
@@ -81,6 +81,7 @@ int main()
 void childTerminateHandler(int signo) {
 	//childPID = getpid();
 	printf("\n CHILD PID: %d exiting", childPID);
+	sleep(1);
 	kill(childPID,SIGKILL);
 }
 
@@ -95,6 +96,7 @@ void userInterruptHandler(int signo)
 	//int childPID = getpid();
 	//int parentPID = getppid();
 	printf("\n Interrupt signal has been caught --> PARENT PID = %d , CHILD PID = %d ", parentPID, childPID);
+	sleep(1);
 	kill(childPID, SIGUSR1);
 }
 
@@ -108,14 +110,16 @@ void doChildThing(int pid)
 
 void alarm_handler(int signalBit)
 {
-	printf("The signal generated from the alarm has been caught");
+	printf("\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
+	sleep(1);
+	kill(parentPID, SIGKILL);
 }
 
 void generateAlarmWithAlarmHandler()
 {
 	signal(SIGALRM, alarm_handler);
 	printf("Setting up Alram\n");
-	alarm(3);
+	alarm(5);
 }
 
 void createStatusFile()
