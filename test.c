@@ -1,32 +1,17 @@
-#include <stdio.h> 
-#include <sys/types.h> 
-#include <unistd.h> 
-void forkexample() 
-{ 
-	// child process because return value zero 
-	if (fork() == 0){
+#include <stdio.h>
+#include <signal.h>
 
-		int childPID = getpid();
-		printf("Hello from Child! CHILD PID: %d\n",childPID); 
-		while(1){
+ void alarm_handler (int);
 
-		}
-	} 
-		
+int main()
+{
+	signal(SIGALRM, alarm_handler); 
+	printf("Setting up Alram\n");
+	alarm(5);
+	pause();
+}
 
-	// parent process because return value non-zero. 
-	else{
-
-		int parentPID = getpid();
-		printf("Hello from Parent! PARENT PID: %d\n",parentPID); 
-		while(1){
-
-		}
-	}
-		
-} 
-int main() 
-{ 
-	forkexample(); 
-	return 0; 
+void alarm_handler(int signalBit){
+	
+	printf("The signal generated from the alarm has been caught");
 }

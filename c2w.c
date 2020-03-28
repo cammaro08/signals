@@ -10,15 +10,18 @@ void createStatusFile();
 void addToStatusFile(char[]);
 void userInterruptHandler(int);
 void mycustom1_handler(int);
+void childTerminateHandler(int);
 void doChildThing(int);
 void parentHandler(int);
+
+
+	int childPID;
+	int parentPID;
 
 int main()
 {
 
 	int process;
-	int childPID;
-	int parentPID;
 
 	printf("Main Parent Process Starting\n");
 
@@ -47,34 +50,48 @@ int main()
 		printf("CHILD PID: %d CHILD PROCESS CONTINUES\n", childPID);
 		// doChildThing(childPID);
 		signal(SIGINT, &userInterruptHandler);
+		signal(SIGUSR1, &mycustom1_handler);
+		signal(SIGTSTP, &childTerminateHandler);
+		signal(SIGSTOP, &childTerminateHandler);
+		generateAlarmWithAlarmHandler();
+
 	}
 	else
 	{
 		parentPID = getpid();
-		printf("PARENT PID: %d PARENT PROCESS CONTINUES\n", parentPID);
+		//child_pid = process;
+		printf("PARENT PID: %d PARENT PROCESS CONTINUES CHILD PID: %d\n", parentPID, childPID);
 		signal(SIGINT, &parentHandler);
+		signal(SIGSTOP, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
 	}
 
 	//addToStatusFile("Parent Process Created");
-	//signal(SIGUSR1,mycustom1_handler);
+	
 	for (;;)
 		;
 
 	return 0;
 }
 
+void childTerminateHandler(int signo) {
+	//childPID = getpid();
+	printf("\n CHILD PID: %d exiting", childPID);
+	//kill(childPID,SIGKILL);
+}
+
 void parentHandler(int signo)
 {
-	printf("PARENT HANDLER INVOKED");
+	fprintf(stdout, "PARENT HANDLER INVOKED");
 }
 
 void userInterruptHandler(int signo)
 {
 	//signal(SIGINT, userInterruptHandler);
-	int childPID = getpid();
-	int parentPID = getppid();
+	//int childPID = getpid();
+	//int parentPID = getppid();
 	printf("\n Interrupt signal has been caught --> PARENT PID = %d , CHILD PID = %d ", parentPID, childPID);
-	//kill(childPID, SIGUSR1);
+	kill(childPID, SIGUSR1);
 }
 
 void doChildThing(int pid)
@@ -94,7 +111,7 @@ void generateAlarmWithAlarmHandler()
 {
 	signal(SIGALRM, alarm_handler);
 	printf("Setting up Alram\n");
-	alarm(5);
+	alarm(3);
 }
 
 void createStatusFile()
@@ -133,6 +150,6 @@ void addToStatusFile(char inputText[1000])
 
 void mycustom1_handler(int sig_num)
 {
-	printf("woo..ctrl-c is pressed..aka TS signal is recieved!\n");
+	printf("\n SIGUSR1 SIGNAL RECEIVED: woo..ctrl-c is pressed..aka TS signal is recieved!\n");
 	return;
 }
