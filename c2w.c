@@ -12,8 +12,6 @@ void addToStatusFile(char[]);
 void userInterruptHandler(int);
 void mycustom1_handler(int);
 void childTerminateHandler(int);
-void doChildThing(int);
-void parentHandler(int);
 
 int childPID;
 int parentPID;
@@ -23,9 +21,8 @@ int main()
 
 	int process;
 
-
+	
 	printf("Main Parent Process Starting\n");
-
 	
 
 	parentPID = getpid();
@@ -38,7 +35,7 @@ int main()
 		initializeStatusFile();
     	redirectStdout();
 
-		printf("CHILD PID: %d CHILD PROCESS CONTINUES\n", childPID);
+		printf("CHILD PID: %d Child process started\n", childPID);
 		signal(SIGINT, &userInterruptHandler);
 		signal(SIGUSR1, &mycustom1_handler);
 		signal(SIGSTOP, SIG_IGN);
@@ -51,7 +48,11 @@ int main()
 
 		initializeStatusFile();
     	redirectStdout();
-		printf("PARENT PID: %d PARENT PROCESS CONTINUES CHILD PID: %d\n", parentPID, childPID);
+
+		printf("-----------------------------\n");
+		printf("Main Parent Process Starting\n");
+
+		printf("PARENT PID: %d Parent process started\n",parentPID);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGTSTP, &childTerminateHandler);
 		signal(SIGSTOP, &childTerminateHandler);
@@ -67,49 +68,40 @@ int main()
 
 void childTerminateHandler(int signo)
 {
-	printf("\n CHILD PID: %d exiting", childPID);
-	sleep(1);
+	printf("CHILD PID: %d Terminating CHILD\n", childPID);
 	kill(childPID, SIGKILL);
-}
-
-void parentHandler(int signo)
-{
-	printf("PARENT HANDLER INVOKED");
+	sleep(1);
 }
 
 void userInterruptHandler(int signo)
 {
-	printf("\n Interrupt signal has been caught --> PARENT PID = %d , CHILD PID = %d ", parentPID, childPID);
-	sleep(1);
+	printf("CHILD PID: %d Interrupt signal has been caught, Sending signal SIGUSR1\n",childPID);
 	kill(childPID, SIGUSR1);
-}
-
-void doChildThing(int pid)
-{
-	printf("CHILD PID: %d, Child process work\n", pid);
+	sleep(1);
 }
 
 void alarm_handler(int signalBit)
 {
-	printf("\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
+	printf("PARENT PID: %d The signal generated from the alarm has been caught. Killing PARENT \n", parentPID);
 	
 	flushOutputAndCloseFile();
 	
 	kill(childPID, SIGKILL);
 	kill(parentPID, SIGKILL);
+	sleep(1);
 }
 
 void generateAlarmWithAlarmHandler()
 {
 	signal(SIGALRM, alarm_handler);
-	printf("Setting up Alram\n");
+	printf("PARENT PID: %d Setting up alarm\n",parentPID);
 	alarm(5);
 }
 
 void mycustom1_handler(int sig_num)
 {
-	printf("\n SIGUSR1 SIGNAL RECEIVED: woo..ctrl-c is pressed..aka TS signal is recieved!\n");
+	printf("CHILD PID: %d SIGUSR1 signal received\n",childPID);
 	int r = rand() % 10;
-	printf("CHILD PID: %d RANDOM NUMBER GENERATED: %d", childPID, r); 
+	printf("CHILD PID: %d Random number generated: %d\n", childPID, r); 
 	
 }
