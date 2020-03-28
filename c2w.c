@@ -1,4 +1,4 @@
-
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <signal.h>
@@ -14,75 +14,50 @@ void childTerminateHandler(int);
 void doChildThing(int);
 void parentHandler(int);
 
-
-	int childPID;
-	int parentPID;
+int childPID;
+int parentPID;
 
 int main()
 {
 
 	int process;
 
-	printf("Main Parent Process Starting\n");
+	fprintf(stderr, "Main Parent Process Starting\n");
 
-	// printf("Process Forked, process = %d \n", process);
-	// if (process < 0)
-	// {
-	// 	printf("fork failed \n");
-	// 	return -1;
-	// }
+	parentPID = getpid();
 
-	// else if(process == 0){
-	// 	childPID = getpid();
-	// 	parentPID = getppid();
-	// 	printf("PARENT PID = %d , CHILD PID = %d, Child process created.", parentPID, childPID);
-	// 	//addToStatusFile("Child Process Created");
-
-	// 	//printf("%d \n",childPID);
-	// 	//generateAlarmWithAlarmHandler();
-	// }
-
-     parentPID = getpid();
-
+	/** CHILD PROCESS **/
 	if ((process = fork()) == 0)
 	{
-		// parentPID = getppid();
 		childPID = getpid();
-		// printf("PARENT PID = %d, CHILD PID = %d, Child process created.", parentPID, childPID);
+
 		printf("CHILD PID: %d CHILD PROCESS CONTINUES\n", childPID);
-		// doChildThing(childPID);
 		signal(SIGINT, &userInterruptHandler);
 		signal(SIGUSR1, &mycustom1_handler);
-				signal(SIGSTOP, SIG_IGN);
+		signal(SIGSTOP, SIG_IGN);
 		signal(SIGTSTP, SIG_IGN);
-
-		//generateAlarmWithAlarmHandler();
-
 	}
 	else
 	{
-	
+	/** PARENT PROCESS **/
 		childPID = process;
 		printf("PARENT PID: %d PARENT PROCESS CONTINUES CHILD PID: %d\n", parentPID, childPID);
 		signal(SIGINT, &parentHandler);
 		signal(SIGTSTP, &childTerminateHandler);
 		signal(SIGSTOP, &childTerminateHandler);
-	generateAlarmWithAlarmHandler();
-
+		generateAlarmWithAlarmHandler();
 	}
 
 	//addToStatusFile("Parent Process Created");
 	for (;;);
-	//pause();
-
 	return 0;
 }
 
-void childTerminateHandler(int signo) {
-	//childPID = getpid();
+void childTerminateHandler(int signo)
+{
 	printf("\n CHILD PID: %d exiting", childPID);
 	sleep(1);
-	kill(childPID,SIGKILL);
+	kill(childPID, SIGKILL);
 }
 
 void parentHandler(int signo)
@@ -92,9 +67,6 @@ void parentHandler(int signo)
 
 void userInterruptHandler(int signo)
 {
-	//signal(SIGINT, userInterruptHandler);
-	//int childPID = getpid();
-	//int parentPID = getppid();
 	printf("\n Interrupt signal has been caught --> PARENT PID = %d , CHILD PID = %d ", parentPID, childPID);
 	sleep(1);
 	kill(childPID, SIGUSR1);
@@ -103,15 +75,11 @@ void userInterruptHandler(int signo)
 void doChildThing(int pid)
 {
 	printf("CHILD PID: %d, Child process work\n", pid);
-	//signal(SIGINT, userInterruptHandler);
-	//printf("CHILD PID: %d, SIGINT HANDLER SET\n", pid);
-	return;
 }
 
 void alarm_handler(int signalBit)
 {
 	fprintf(stderr, "\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
-	//sleep(2);
 	kill(childPID, SIGKILL);
 	kill(parentPID, SIGKILL);
 }
