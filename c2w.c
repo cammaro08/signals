@@ -67,11 +67,11 @@ int main()
 		signal(SIGINT, &parentHandler);
 		signal(SIGTSTP, &childTerminateHandler);
 		signal(SIGSTOP, &childTerminateHandler);
+	generateAlarmWithAlarmHandler();
 
 	}
 
 	//addToStatusFile("Parent Process Created");
-	generateAlarmWithAlarmHandler();
 	for (;;);
 	//pause();
 
@@ -110,8 +110,9 @@ void doChildThing(int pid)
 
 void alarm_handler(int signalBit)
 {
-	printf("\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
-	sleep(1);
+	fprintf(stderr, "\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
+	//sleep(2);
+	kill(childPID, SIGKILL);
 	kill(parentPID, SIGKILL);
 }
 
