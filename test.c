@@ -1,34 +1,32 @@
 #include <stdio.h> 
-#include <signal.h> 
-
-
-void sigintHandler(int sig_num) 
+#include <sys/types.h> 
+#include <unistd.h> 
+void forkexample() 
 { 
-    /* Reset handler to catch SIGINT next time. 
-       Refer http://en.cppreference.com/w/c/program/signal */
-    signal(SIGINT, sigintHandler); 
-    printf("\n Cannot be terminated using Ctrl+C \n"); 
-    // fflush(stdout); 
-} 
+	// child process because return value zero 
+	if (fork() == 0){
 
-void mycustom1_handler (int signo)
-{
-    printf("woo..ctrl-c is pressed..aka TS signal is recieved!\n");   
-	return; 
+		int childPID = getpid();
+		printf("Hello from Child! CHILD PID: %d\n",childPID); 
+		while(1){
+
+		}
+	} 
+		
+
+	// parent process because return value non-zero. 
+	else{
+
+		int parentPID = getpid();
+		printf("Hello from Parent! PARENT PID: %d\n",parentPID); 
+		while(1){
+
+		}
+	}
+		
+} 
+int main() 
+{ 
+	forkexample(); 
+	return 0; 
 }
-
-
-int main () 
-{ 
-    /* Set the SIGINT (Ctrl-C) signal handler to sigintHandler  
-       Refer http://en.cppreference.com/w/c/program/signal */
-    signal(SIGINT, sigintHandler); 
-    signal(SIGUSR1,mycustom1_handler);
-    /* Infinite loop */
-    while(1) 
-    {         
-    } 
-    return 0; 
-} 
-
-
