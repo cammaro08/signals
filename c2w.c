@@ -3,6 +3,7 @@
 #include <time.h>
 #include <signal.h>
 #include <unistd.h>
+#include "fileUtils.h"
 
 void alarm_handler(int);
 void generateAlarmWithAlarmHandler();
@@ -22,7 +23,10 @@ int main()
 
 	int process;
 
-	fprintf(stderr, "Main Parent Process Starting\n");
+
+	printf("Main Parent Process Starting\n");
+
+	
 
 	parentPID = getpid();
 
@@ -30,6 +34,9 @@ int main()
 	if ((process = fork()) == 0)
 	{
 		childPID = getpid();
+
+		initializeStatusFile();
+    	redirectStdout();
 
 		printf("CHILD PID: %d CHILD PROCESS CONTINUES\n", childPID);
 		signal(SIGINT, &userInterruptHandler);
@@ -41,15 +48,20 @@ int main()
 	{
 	/** PARENT PROCESS **/
 		childPID = process;
+
+		initializeStatusFile();
+    	redirectStdout();
 		printf("PARENT PID: %d PARENT PROCESS CONTINUES CHILD PID: %d\n", parentPID, childPID);
-		signal(SIGINT, &parentHandler);
+		signal(SIGINT, SIG_IGN);
 		signal(SIGTSTP, &childTerminateHandler);
 		signal(SIGSTOP, &childTerminateHandler);
+		srand(time(NULL));   // Initialization, should only be called once.
 		generateAlarmWithAlarmHandler();
 	}
 
 	//addToStatusFile("Parent Process Created");
 	for (;;);
+
 	return 0;
 }
 
@@ -62,7 +74,7 @@ void childTerminateHandler(int signo)
 
 void parentHandler(int signo)
 {
-	fprintf(stdout, "PARENT HANDLER INVOKED");
+	printf("PARENT HANDLER INVOKED");
 }
 
 void userInterruptHandler(int signo)
@@ -79,7 +91,10 @@ void doChildThing(int pid)
 
 void alarm_handler(int signalBit)
 {
-	fprintf(stderr, "\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
+	printf("\n The signal generated from the alarm has been caught. Killing PARENT PID %d", parentPID);
+	
+	flushOutputAndCloseFile();
+	
 	kill(childPID, SIGKILL);
 	kill(parentPID, SIGKILL);
 }
@@ -91,42 +106,10 @@ void generateAlarmWithAlarmHandler()
 	alarm(5);
 }
 
-void createStatusFile()
-{
-	FILE *fPtr;
-
-	if (access("data/status.txt", F_OK) != -1)
-	{
-		printf("\nWooo, file already present.\n");
-	}
-	else
-	{
-		fPtr = fopen("data/status.txt", "w");
-		printf("\nWooo, file created.\n");
-		fprintf(fPtr, "*******Log File*******");
-
-		if (fPtr == NULL)
-		{
-			printf("\nERROR: Unable to create file.\n");
-			exit(-1);
-		}
-		fclose(fPtr);
-	}
-}
-
-void addToStatusFile(char inputText[1000])
-{
-	FILE *fPtr;
-	time_t clk = time(NULL);
-
-	createStatusFile();
-	fPtr = fopen("data/status.txt", "a");
-	fprintf(fPtr, "%s: %s", inputText, ctime(&clk));
-	fclose(fPtr);
-}
-
 void mycustom1_handler(int sig_num)
 {
 	printf("\n SIGUSR1 SIGNAL RECEIVED: woo..ctrl-c is pressed..aka TS signal is recieved!\n");
-	return;
+	int r = rand() % 10;
+	printf("CHILD PID: %d RANDOM NUMBER GENERATED: %d", childPID, r); 
+	
 }
