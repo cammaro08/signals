@@ -7,13 +7,13 @@
 #include "fileUtils.h"
 #include "pyinterop.h"
 
-void alarm_handler(int);
+void alarmHandler(int);
 void generateAlarmWithAlarmHandler();
 void createStatusFile();
 void addToStatusFile(char[]);
 void userInterruptHandler(int);
-void mycustom1_handler(int);
-void childTerminateHandler(int);
+void mycustomHandler(int);
+void ctrlZSignalHandler(int);
 void writeValuesToFileFromDatabase();
 
 int childPID;
@@ -39,12 +39,13 @@ int main()
 	{
 		childPID = getpid();
 
+		/** Redirecting standard output  **/
 		initializeStatusFile();
     	redirectStdout();
 
 		printf("CHILD PID: %d Child process started %s", childPID,ctime(&clk));
 		signal(SIGINT, &userInterruptHandler);
-		signal(SIGUSR1, &mycustom1_handler);
+		signal(SIGUSR1, &mycustomHandler);
 		signal(SIGSTOP, SIG_IGN);
 		signal(SIGTSTP, SIG_IGN);
 	}
@@ -53,6 +54,7 @@ int main()
 	/** PARENT PROCESS **/
 		childPID = process;
 
+		/** Redirecting standard output  **/
 		initializeStatusFile();
     	redirectStdout();
 
@@ -61,9 +63,9 @@ int main()
 
 		printf("PARENT PID: %d Parent process started %s",parentPID,ctime(&clk));
 		signal(SIGINT, SIG_IGN);
-		signal(SIGTSTP, &childTerminateHandler);
-		signal(SIGSTOP, &childTerminateHandler);
-		srand(time(NULL));   // Initialization, should only be called once.
+		signal(SIGTSTP, &ctrlZSignalHandler);
+		signal(SIGSTOP, &ctrlZSignalHandler);
+		srand(time(NULL));   // Initialization for random number generations
 		generateAlarmWithAlarmHandler();
 	}
 
@@ -72,18 +74,18 @@ int main()
 	return 0;
 }
 
-
-void childTerminateHandler(int signo)
+/** CTRL-Z Signal Handler **/
+void ctrlZSignalHandler(int signo)
 {
 	printf("CHILD PID: %d CTRL-Z Signal Recieved. %s", childPID, ctime(&clk));
-	
+	/** Execute if not run before by Alarm Handler **/
 	if (dbEraseFlag != 1){
 		printf("CHILD PID: %d Writing database values to result.txt %s", childPID, ctime(&clk));
 		writeValuesToFileFromDatabase();
 		printf("CHILD PID: %d Truncating database. %s", childPID, ctime(&clk));
 			initPython("db", "resetDatabaseTable");
-			callFunc("test");
-		dbEraseFlag = 1;
+			callFunc("test"); 
+		dbEraseFlag = 1; //set Flag
 		printf("CHILD PID: %d Database truncated. %s", childPID, ctime(&clk));
 	}
 	closePython();
@@ -99,16 +101,17 @@ void userInterruptHandler(int signo)
 	sleep(1);
 }
 
-void alarm_handler(int signalBit)
+void alarmHandler(int signalBit)
 {
 	printf("PARENT PID: %d The signal generated from the alarm has been caught. %s", parentPID, ctime(&clk));
+	/** Execute if not run before by CTRL-Z Handler **/
 	if (dbEraseFlag != 1){
 		printf("CHILD PID: %d Writing database values to result.txt %s", childPID, ctime(&clk));
 		writeValuesToFileFromDatabase();
 		printf("CHILD PID: %d Truncating database. %s", childPID, ctime(&clk));
 			initPython("db", "resetDatabaseTable");
 			callFunc("test");
-		dbEraseFlag = 1;
+		dbEraseFlag = 1;  //set Flag
 		printf("CHILD PID: %d Database truncated. %s", childPID, ctime(&clk));
 	}
 	
@@ -116,7 +119,7 @@ void alarm_handler(int signalBit)
 	printf("PARENT PID: %d Parent termination process begininng %s", parentPID, ctime(&clk));
 
 	
-	
+	/** Ensures CHILD process is killed before PARENT **/
 	printf("PARENT PID: %d Sendiing SIGKILL to CHILD %s", parentPID, ctime(&clk));
 	kill(childPID, SIGKILL);
 	printf("PARENT PID: %d Sendiing SIGKILL to PARENT %s", parentPID, ctime(&clk));
@@ -127,21 +130,22 @@ void alarm_handler(int signalBit)
 
 void generateAlarmWithAlarmHandler()
 {
-	signal(SIGALRM, alarm_handler);
+	signal(SIGALRM, alarmHandler);
 	printf("PARENT PID: %d Setting up alarm %s",parentPID, ctime(&clk));
 	alarm(5);
 }
 
-void mycustom1_handler(int sig_num)
+/** Generates and add numbers to database **/
+void mycustomHandler(int sig_num)
 {
 	printf("CHILD PID: %d SIGUSR1 signal received %s",childPID, ctime(&clk));
 	int r = rand() % 10;
 	char strNum[3];
 	printf("CHILD PID: %d Random number generated: %d %s", childPID, r, ctime(&clk));
 	printf("CHILD PID: %d Adding number to database: %d %s", childPID, r, ctime(&clk)); 
-	initPython("db", "putValueInDatabase");
+	initPython("db", "putValueInDatabase"); //setting up PYTHON method call
     sprintf(strNum, "%d", r);
-	callFunc(strNum);
+	callFunc(strNum);  //calling PYTHON method
 	printf("CHILD PID: %d Random number added to database: %d %s", childPID, r, ctime(&clk)); 
 	
 	
