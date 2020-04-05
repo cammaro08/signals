@@ -67,7 +67,6 @@ int main()
 		generateAlarmWithAlarmHandler();
 	}
 
-	//addToStatusFile("Parent Process Created");
 	for (;;);
 
 	return 0;

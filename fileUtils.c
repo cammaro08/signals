@@ -10,21 +10,9 @@
 int out;
 int save_out;
 
-// int main(int argc, const char *argv[])
-// {
- 
-//     initializeStatusFile();
-//     redirectStdout();
-//     //printf("HOWDY!");
-//     writeFileMetaData();
-//     flushOutputAndCloseFile();
-
-//     return 0;
-// }
-
 void initializeStatusFile() {
-    out = open("data/cout.log", O_RDWR|O_CREAT|O_APPEND, 0600);
-    if (-1 == out) { perror("opening cout.log"); exit(255); }
+    out = open("files/status.txt", O_RDWR|O_CREAT|O_APPEND, 0600);
+    if (-1 == out) { perror("cant open status file"); exit(255); }
 }
 
 void redirectStdout() {
@@ -43,6 +31,6 @@ void flushOutputAndCloseFile() {
 
 void writeFileMetaData() {
     struct stat attrib;
-    stat("data/cout.log", &attrib);
+    stat("files/status.txt", &attrib);
     printf("\n\n METADATA %ln", &attrib.st_mtime);
 }
