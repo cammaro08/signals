@@ -107,6 +107,13 @@ void mycustom1_handler(int sig_num)
 {
 	printf("CHILD PID: %d SIGUSR1 signal received %s",childPID, ctime(&clk));
 	int r = rand() % 10;
-	printf("CHILD PID: %d Random number generated: %d %s", childPID, r, ctime(&clk)); 
+	char strNum[3];
+	printf("CHILD PID: %d Random number generated: %d %s", childPID, r, ctime(&clk));
+	printf("CHILD PID: %d Adding number to database: %d %s", childPID, r, ctime(&clk)); 
+	initPython("db", "putValueInDatabase");
+    sprintf(strNum, "%d", r);
+	callFunc(strNum);
+	printf("CHILD PID: %d Random number added to database: %d %s", childPID, r, ctime(&clk)); 
+
 	
 }

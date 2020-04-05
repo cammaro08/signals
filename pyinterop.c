@@ -32,7 +32,7 @@ long callFunc(char* value) {
    {   
        pValue=Py_BuildValue("(z)",(char*)value);
        PyErr_Print();
-       printf("%s!\n", value);
+       //printf("%s!\n", value);
        presult=PyObject_CallObject(pFunc,pValue);
        PyErr_Print();
    } else
