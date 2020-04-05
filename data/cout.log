@@ -1,73 +1,37 @@
 -----------------------------
-Main Parent Process Starting Sun Apr  5 18:31:45 2020
-PARENT PID: 8428 Parent process started Sun Apr  5 18:31:45 2020
-PARENT PID: 8428 Setting up alarm Sun Apr  5 18:31:45 2020
-CHILD PID: 8429 Child process started Sun Apr  5 18:31:45 2020
-CHILD PID: 8429 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:31:45 2020
-CHILD PID: 8429 SIGUSR1 signal received Sun Apr  5 18:31:45 2020
-CHILD PID: 8429 Random number generated: 3 Sun Apr  5 18:31:45 2020
-CHILD PID: 8429 Adding number to database: 3 Sun Apr  5 18:31:45 2020
-CHILD PID: 8429 Terminating CHILD Sun Apr  5 18:31:45 2020
-PARENT PID: 8428 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 18:31:45 2020
+Main Parent Process Starting Sun Apr  5 19:24:46 2020
+PARENT PID: 9569 Parent process started Sun Apr  5 19:24:46 2020
+PARENT PID: 9569 Setting up alarm Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Child process started Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 SIGUSR1 signal received Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Random number generated: 3 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Adding number to database: 3 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Random number added to database: 3 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 SIGUSR1 signal received Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Random number generated: 6 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Adding number to database: 6 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Random number added to database: 6 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 SIGUSR1 signal received Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Random number generated: 7 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Adding number to database: 7 Sun Apr  5 19:24:46 2020
+CHILD PID: 9570 Random number added to database: 7 Sun Apr  5 19:24:46 2020
+PARENT PID: 9569 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 19:24:46 2020
 -----------------------------
-Main Parent Process Starting Sun Apr  5 18:32:41 2020
-PARENT PID: 8475 Parent process started Sun Apr  5 18:32:41 2020
-PARENT PID: 8475 Setting up alarm Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Child process started Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 SIGUSR1 signal received Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number generated: 3 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Adding number to database: 3 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number added to database: 3 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 SIGUSR1 signal received Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number generated: 6 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Adding number to database: 6 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number added to database: 6 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 SIGUSR1 signal received Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number generated: 7 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Adding number to database: 7 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number added to database: 7 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 SIGUSR1 signal received Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number generated: 5 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Adding number to database: 5 Sun Apr  5 18:32:41 2020
-CHILD PID: 8476 Random number added to database: 5 Sun Apr  5 18:32:41 2020
-PARENT PID: 8475 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 18:32:41 2020
------------------------------
-Main Parent Process Starting Sun Apr  5 18:40:14 2020
-PARENT PID: 8601 Parent process started Sun Apr  5 18:40:14 2020
-PARENT PID: 8601 Setting up alarm Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Child process started Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 SIGUSR1 signal received Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Random number generated: 3 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Adding number to database: 3 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Random number added to database: 3 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 SIGUSR1 signal received Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Random number generated: 6 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Adding number to database: 6 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Random number added to database: 6 Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Terminating CHILD Sun Apr  5 18:40:14 2020
-CHILD PID: 8602 Terminating CHILD Sun Apr  5 18:40:14 2020
-PARENT PID: 8601 The signal generated from the alarm has been caught. Sun Apr  5 18:40:14 2020
------------------------------
-Main Parent Process Starting Sun Apr  5 19:01:26 2020
-PARENT PID: 8962 Parent process started Sun Apr  5 19:01:26 2020
-PARENT PID: 8962 Setting up alarm Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Child process started Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 SIGUSR1 signal received Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Random number generated: 3 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Adding number to database: 3 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Random number added to database: 3 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 SIGUSR1 signal received Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Random number generated: 6 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Adding number to database: 6 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Random number added to database: 6 Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Terminating CHILD Sun Apr  5 19:01:26 2020
-CHILD PID: 8963 Terminating CHILD Sun Apr  5 19:01:26 2020
-PARENT PID: 8962 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 19:01:26 2020
+Main Parent Process Starting Sun Apr  5 19:25:05 2020
+PARENT PID: 9571 Parent process started Sun Apr  5 19:25:05 2020
+PARENT PID: 9571 Setting up alarm Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Child process started Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 SIGUSR1 signal received Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Random number generated: 3 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Adding number to database: 3 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Random number added to database: 3 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 SIGUSR1 signal received Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Random number generated: 6 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Adding number to database: 6 Sun Apr  5 19:25:05 2020
+CHILD PID: 9572 Terminating CHILD Sun Apr  5 19:25:05 2020
+PARENT PID: 9571 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 19:25:05 2020

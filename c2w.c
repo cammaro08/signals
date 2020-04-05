@@ -73,9 +73,13 @@ int main()
 
 void childTerminateHandler(int signo)
 {
+	initPython("db", "getAllValuesFromDatabase");
+	char* arg = "test";
+	callFunc(arg);
 	printf("CHILD PID: %d Terminating CHILD %s", childPID, ctime(&clk));
 	kill(childPID, SIGKILL);
 	sleep(1);
+	closePython();
 }
 
 void userInterruptHandler(int signo)
@@ -114,6 +118,6 @@ void mycustom1_handler(int sig_num)
     sprintf(strNum, "%d", r);
 	callFunc(strNum);
 	printf("CHILD PID: %d Random number added to database: %d %s", childPID, r, ctime(&clk)); 
-
+	closePython();
 	
 }
