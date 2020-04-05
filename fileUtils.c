@@ -44,5 +44,5 @@ void flushOutputAndCloseFile() {
 void writeFileMetaData() {
     struct stat attrib;
     stat("data/cout.log", &attrib);
-    printf("\n\n METADATA %s", &attrib.st_mtime);
+    printf("\n\n METADATA %ln", &attrib.st_mtime);
 }

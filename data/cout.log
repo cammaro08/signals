@@ -70,3 +70,27 @@ PARENT PID: 1940 Parent process started Wed Apr  1 22:28:35 2020
 PARENT PID: 1940 Setting up alarm Wed Apr  1 22:28:35 2020
 CHILD PID: 1941 Child process started Wed Apr  1 22:28:35 2020
 PARENT PID: 1940 The signal generated from the alarm has been caught. Killing PARENT Wed Apr  1 22:28:35 2020
+-----------------------------
+Main Parent Process Starting Sun Apr  5 18:09:40 2020
+PARENT PID: 8068 Parent process started Sun Apr  5 18:09:40 2020
+PARENT PID: 8068 Setting up alarm Sun Apr  5 18:09:40 2020
+CHILD PID: 8069 Child process started Sun Apr  5 18:09:40 2020
+PARENT PID: 8068 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 18:09:40 2020
+-----------------------------
+Main Parent Process Starting Sun Apr  5 18:09:49 2020
+PARENT PID: 8070 Parent process started Sun Apr  5 18:09:49 2020
+PARENT PID: 8070 Setting up alarm Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Child process started Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 SIGUSR1 signal received Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Random number generated: 3 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 SIGUSR1 signal received Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Random number generated: 6 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 SIGUSR1 signal received Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Random number generated: 7 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Interrupt signal has been caught, Sending signal SIGUSR1 Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 SIGUSR1 signal received Sun Apr  5 18:09:49 2020
+CHILD PID: 8071 Random number generated: 5 Sun Apr  5 18:09:49 2020
+PARENT PID: 8070 The signal generated from the alarm has been caught. Killing PARENT Sun Apr  5 18:09:49 2020

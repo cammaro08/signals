@@ -11,21 +11,21 @@ long  callFunc(char*);
 // globals
 PyObject *pName, *pModule, *pDict, *pFunc, *pValue, *presult;
 
-int main()
-{
+// int main()
+// {
    
-   //initPython("db", "putValueInDatabase");
-   //initPython("arbName", "someFunction");
+//    //initPython("db", "putValueInDatabase");
+//    //initPython("arbName", "someFunction");
 
-   // callFunc("6");
-   // long result22 = callFunc("Calling this again!");
+//    // callFunc("6");
+//    // long result22 = callFunc("Calling this again!");
 
-   // printf("Result is %ld\n",result);
+//    // printf("Result is %ld\n",result);
 
-   //closePython();
+//    //closePython();
 
-    return 0;
-}
+//     return 0;
+// }
 
 long callFunc(char* value) {
    if (PyCallable_Check(pFunc))
