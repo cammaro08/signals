@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <strings.h>
 #include "fileUtils.h"
+#include "pyinterop.h"
 
 void alarm_handler(int);
 void generateAlarmWithAlarmHandler();
