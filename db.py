@@ -34,25 +34,27 @@ def getAllValuesFromDatabase(num):
     for row in result:
         values = values + " " + str(row[0])
    
-    f = open("data/results.txt", "w")
+    f = open("data/results.txt", "w")                                               
     f.write("----------------\n")
     f.write(values)
     f.close()
     cursor.close()
-    
-    cursor = db.cursor()
-    cursor.execute("TRUNCATE TABLE randomNumbers")
-    db.commit()
 
     db.close()
     return values
 
 
-def resetDatabaseTable(dbLocal, localCursor):
+def resetDatabaseTable(test):
+    db = initialize()
+    cursor = db.cursor()
 
-    localCursor.execute("TRUNCATE TABLE randomNumbers")
+    cursor.execute("TRUNCATE TABLE randomNumbers")
 
-    dbLocal.commit()
+    db.commit()
+
+    db.close
+
+    return 99
 
 def close():
     db.close()

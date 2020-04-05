@@ -14,10 +14,13 @@ void addToStatusFile(char[]);
 void userInterruptHandler(int);
 void mycustom1_handler(int);
 void childTerminateHandler(int);
+void writeValuesToFileFromDatabase();
 
 int childPID;
 int parentPID;
+int dbEraseFlag = 0;
 time_t clk;
+
 
 int main()
 {
@@ -73,13 +76,21 @@ int main()
 
 void childTerminateHandler(int signo)
 {
-	initPython("db", "getAllValuesFromDatabase");
-	char* arg = "test";
-	callFunc(arg);
+	printf("CHILD PID: %d CTRL-Z Signal Recieved. %s", childPID, ctime(&clk));
+	
+	if (dbEraseFlag != 1){
+		printf("CHILD PID: %d Writing database values to result.txt %s", childPID, ctime(&clk));
+		writeValuesToFileFromDatabase();
+		printf("CHILD PID: %d Truncating database. %s", childPID, ctime(&clk));
+			initPython("db", "resetDatabaseTable");
+			callFunc("test");
+		dbEraseFlag = 1;
+		printf("CHILD PID: %d Database truncated. %s", childPID, ctime(&clk));
+	}
+	closePython();
 	printf("CHILD PID: %d Terminating CHILD %s", childPID, ctime(&clk));
 	kill(childPID, SIGKILL);
 	sleep(1);
-	closePython();
 }
 
 void userInterruptHandler(int signo)
@@ -91,8 +102,20 @@ void userInterruptHandler(int signo)
 
 void alarm_handler(int signalBit)
 {
-	printf("PARENT PID: %d The signal generated from the alarm has been caught. Killing PARENT %s", parentPID, ctime(&clk));
+	printf("PARENT PID: %d The signal generated from the alarm has been caught. %s", parentPID, ctime(&clk));
+	if (dbEraseFlag != 1){
+		printf("CHILD PID: %d Writing database values to result.txt %s", childPID, ctime(&clk));
+		writeValuesToFileFromDatabase();
+		printf("CHILD PID: %d Truncating database. %s", childPID, ctime(&clk));
+			initPython("db", "resetDatabaseTable");
+			callFunc("test");
+		dbEraseFlag = 1;
+		printf("CHILD PID: %d Database truncated. %s", childPID, ctime(&clk));
+	}
 	
+
+	printf("PARENT PID: %d Killing Parent %s", parentPID, ctime(&clk));
+
 	flushOutputAndCloseFile();
 	
 	kill(childPID, SIGKILL);
@@ -118,6 +141,15 @@ void mycustom1_handler(int sig_num)
     sprintf(strNum, "%d", r);
 	callFunc(strNum);
 	printf("CHILD PID: %d Random number added to database: %d %s", childPID, r, ctime(&clk)); 
-	closePython();
 	
+	
+}
+
+
+void writeValuesToFileFromDatabase()
+{
+	initPython("db", "getAllValuesFromDatabase");
+	char* arg = "test";
+	callFunc(arg);
+
 }
