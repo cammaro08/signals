@@ -114,11 +114,14 @@ void alarm_handler(int signalBit)
 	}
 	
 
-	printf("PARENT PID: %d Killing Parent %s", parentPID, ctime(&clk));
+	printf("PARENT PID: %d Parent termination process begininng %s", parentPID, ctime(&clk));
 
-	flushOutputAndCloseFile();
 	
+	
+	printf("PARENT PID: %d Sendiing SIGKILL to CHILD %s", parentPID, ctime(&clk));
 	kill(childPID, SIGKILL);
+	printf("PARENT PID: %d Sendiing SIGKILL to PARENT %s", parentPID, ctime(&clk));
+	flushOutputAndCloseFile();
 	kill(parentPID, SIGKILL);
 	sleep(1);
 }
