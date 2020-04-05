@@ -19,20 +19,22 @@ def putValueInDatabase(num):
     cursor.execute(sqlFormula)
     db.commit()
     cursor.close()
+    db.close()
     return 99
     
 def getAllValuesFromDatabase():
-    
+    db = initialize()
+    cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM randomNumbers")
+    cursor.execute("SELECT number FROM randomNumbers")
 
     result = cursor.fetchall()
 
     values = ""
     for row in result:
         values = values + " " + str(row[0])
-    print(values)
-
+   
+    db.close()
     return values
 
 
