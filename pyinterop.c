@@ -12,7 +12,7 @@ long  callFunc(char*);
 PyObject *pName, *pModule, *pDict, *pFunc, *pValue, *presult;
 
 
-
+// call pythonn function.
 long callFunc(char* value) {
    if (PyCallable_Check(pFunc))
    {   
